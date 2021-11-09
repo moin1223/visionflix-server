@@ -4,12 +4,13 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const authRoute = require("./routes/auth");
 const userRoute = require("./routes/users");
+const movieRoute = require("./routes/movies");
 dotenv.config();
 // database connection with mongoose
 mongoose.connect(process.env.MONGO_URL,{
     useNewUrlParser:true,
     useUnifiedTopology:true,
-    // useCreateIndex:true,
+    // useCreateIndex:true,      
 
 })
 .then(()=>console.log("DB connection succes"))
@@ -19,6 +20,8 @@ app.use(express.json());
 
 app.use("/api/auth",authRoute);
 app.use("/api/users",userRoute);
+app.use("/api/movies",movieRoute);
+
 app.use((err,req,res,next)=>{
     if(err.message){
         res.status(500).send(err.message)
